@@ -1,6 +1,7 @@
 package com.btgpactual.order_ms.listener;
 
 import com.btgpactual.order_ms.listener.dto.OrderCreateEventDto;
+import com.btgpactual.order_ms.services.OrderService;
 import com.rabbitmq.client.AMQP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,12 @@ public class OrderCreatedListener {
      */
     private final Logger logger = LoggerFactory.getLogger(OrderCreatedListener.class);
 
+    private final OrderService orderService;
+
+    public OrderCreatedListener(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
     /**
      * Metodo que escuta e consome mensagens da fila {@code btg-pactual-order-created}.
      *
@@ -39,5 +46,7 @@ public class OrderCreatedListener {
     @RabbitListener(queues = ORDER_CREATED_QUEUE)
     public void listen(Message<OrderCreateEventDto> message) {
         logger.info("Message consumed: {}", message);
+
+        orderService.save(message.getPayload());
     }
 }
