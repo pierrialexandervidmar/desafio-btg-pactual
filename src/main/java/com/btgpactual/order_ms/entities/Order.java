@@ -21,7 +21,7 @@ public class Order {
     @Field(targetType = FieldType.DECIMAL128)
     private BigDecimal total;
 
-    private List<OrderItem> items;
+    private List<OrderItem> itens;
 
     public Order() {
     }
@@ -50,11 +50,11 @@ public class Order {
         this.total = total;
     }
 
-    public List<OrderItem> getItems() {
-        return items;
+    public List<OrderItem> getItens() {
+        return itens;
     }
 
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
+    public void setItens(List<OrderItem> itens) {
+        this.itens = itens;
     }
 }
